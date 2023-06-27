@@ -1,0 +1,13 @@
+opencv-python-headless
+numpy
+ultralytics
+supervision
+onnx
+onnxruntime-gpu
+numpy
+tqdm
+deep-sort-realtime
+gradio
+huggingface_hub
+autodistill
+autodistill_grounded_sam

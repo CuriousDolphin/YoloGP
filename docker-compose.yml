@@ -1,0 +1,50 @@
+services:
+  # jupyter_server:
+  #   build:
+  #     dockerfile: Dockerfile
+  #     target: jupyter-server
+  #   ports:
+  #     - 8888:8888
+  #   volumes:
+  #     - .:/app
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [ gpu ]
+  # app:
+  #   build:
+  #     dockerfile: Dockerfile
+  #     target: app
+  #   ports:
+  #     - 8000:7860
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - ./gradio_app.py:/app/gradio_app.py
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [ gpu ]
+  hf_app:
+    build:
+      dockerfile: Dockerfile.hf
+      target: app
+    ports:
+      - 8000:7860
+    env_file:
+      - .env
+    volumes:
+      - ./gradio_app.py:/app/gradio_app.py
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
