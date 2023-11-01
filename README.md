@@ -1,2 +1,2 @@
 # yoloGP
-🤖 autodistillation groundingSAM ->yolo 🏍️
+🤖 autodistillation groundingSAM -> yolo 🏍️

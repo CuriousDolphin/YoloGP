@@ -8,6 +8,7 @@ RUN pip3 install torch torchvision
 FROM base-img as app
 WORKDIR /app
 COPY requirements.txt requirements.txt
+COPY assets assets
+COPY yologp yologp
 RUN pip3 install -r requirements.txt
-COPY gradio_app.py gradio_app.py
-ENTRYPOINT [ "gradio","gradio_app.py" ]
+ENTRYPOINT [ "python","./yologp/inference_gradio_app.py" ]
