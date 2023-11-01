@@ -12,3 +12,4 @@ huggingface_hub
 autodistill>=0.1.15
 autodistill_grounded_sam>=0.1.1
 python-dotenv
+pytube

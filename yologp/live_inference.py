@@ -39,7 +39,7 @@ while True:
         frame = cv2.resize(frame, (960, 640))
         res = model(frame, imgsz=(960, 640), conf=0.25, iou=0.45)[0]
         if len(res) > 0:
-            detections = sv.Detections.from_yolov8(res)
+            detections = sv.Detections.from_ultralytics(res)
             detections = detections[np.isin(detections.class_id, selected_classes)]
             helmets_wheel = detections[np.isin(detections.class_id, [2, 3, 4])]
             curbs = detections[np.isin(detections.class_id, [0, 1, 7])]

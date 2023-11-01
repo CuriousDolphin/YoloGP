@@ -24,9 +24,9 @@ classes = ["curb", "curb", "helmet", "wheel", "moto", "moto", "rider", "road"]
 selected_classes = [0, 2, 3, 5, 6]
 
 
-def inference(image, progress=gr.Progress()):
+def inference(image, conf: float, iou: float, progress=gr.Progress()):
     frame = cv2.resize(image, (960, 640))
-    res = model(frame, imgsz=(960, 640), conf=0.3, iou=0.4)[0]
+    res = model(frame, imgsz=(960, 640), conf=conf, iou=iou)[0]
     detections = sv.Detections.from_ultralytics(res)
     detections = detections[np.isin(detections.class_id, selected_classes)]
     if len(detections) > 0:
@@ -45,7 +45,11 @@ with gr.Blocks() as inference_app:
     with gr.Row():
         with gr.Column():
             image = gr.Image()
-            button = gr.Button(variant="primary")
+            conf = gr.Slider(label="Confidence", minimum=0, maximum=0.99, value=0.3)
+            iou = gr.Slider(label="IoU", minimum=0, maximum=0.99, value=0.45)
+
+            with gr.Row():
+                button = gr.Button(variant="primary")
             examples = gr.Examples(
                 examples=[
                     ["./assets/Rossi_Lorenzo_Catalunya2009.png"],
@@ -56,8 +60,7 @@ with gr.Blocks() as inference_app:
         with gr.Column():
             output_im = gr.Image()
 
-    button.click(fn=inference, inputs=[image], outputs=output_im)
-
+    button.click(fn=inference, inputs=[image, conf, iou], outputs=output_im)
 
 if __name__ == "__main__":
     inference_app.queue(max_size=10).launch(server_name="0.0.0.0")
