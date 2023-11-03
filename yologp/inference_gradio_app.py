@@ -40,7 +40,7 @@ def inference(image, conf: float, iou: float, progress=gr.Progress()):
     return frame
 
 
-with gr.Blocks() as inference_app:
+""" with gr.Blocks() as inference_app:
     gr.Markdown("# 🏍️ YoloGP: Motogp tracker")
     with gr.Row():
         with gr.Column():
@@ -60,7 +60,26 @@ with gr.Blocks() as inference_app:
         with gr.Column():
             output_im = gr.Image()
 
-    button.click(fn=inference, inputs=[image, conf, iou], outputs=output_im)
+    button.click(fn=inference, inputs=[image, conf, iou], outputs=output_im) """
+
+
+inference_interface = gr.Interface(
+    description="# 🏍️ YoloGP: Motogp tracker (YoloV8 nano, detection & segmentation)",
+    fn=inference,
+    inputs=[
+        gr.Image(),
+        gr.Slider(label="Confidence", minimum=0, maximum=0.99, value=0.3),
+        gr.Slider(label="IoU", minimum=0, maximum=0.99, value=0.45),
+    ],
+    outputs=[gr.Image()],
+    examples=[
+        ["./assets/Rossi_Lorenzo_Catalunya2009.png"],
+        ["./assets/sample1.png"],
+    ],
+    allow_flagging="never",
+)
+
 
 if __name__ == "__main__":
-    inference_app.queue(max_size=10).launch(server_name="0.0.0.0")
+    inference_interface.queue().launch(server_name="0.0.0.0")
+    # inference_app.queue(max_size=10).launch(server_name="0.0.0.0")
