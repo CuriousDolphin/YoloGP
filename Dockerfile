@@ -24,4 +24,4 @@ COPY requirements.txt requirements.txt
 COPY assets assets
 COPY yologp yologp
 RUN pip3 install -r requirements.txt
-ENTRYPOINT [ "python","yologp/inference_gradio_app.py" ]
+ENTRYPOINT [ "python","yologp/gradio_app.py" ]
